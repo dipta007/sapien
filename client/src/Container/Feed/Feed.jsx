@@ -30,7 +30,7 @@ class Feed extends Component {
 
   sideEffects = async () => {
     this.setState({ loading: true });
-    const posts = await Axios.get('http://localhost:8080/posts/', {
+    const posts = await Axios.get('/posts/', {
       params: {
         sort: this.state.sortOrder
       }
