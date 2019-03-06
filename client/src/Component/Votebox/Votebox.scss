@@ -1,0 +1,38 @@
+.vote-box-col {
+  padding-right: 10px;
+  flex-direction: column;
+
+  .vote {
+    color: gray;
+  }
+  .vote:hover {
+    color: black;
+    transform: scale(1.5);
+    @media screen and (max-width: 770px) {
+      transform: none;
+      color: gray;
+    }
+  }
+}
+
+.vote-box-row {
+  padding-right: 10px;
+  flex-direction: row;
+  display: flex;
+  justify-content: space-between;
+  width: 100px;
+
+  .vote {
+    color: gray;
+    cursor: pointer;
+  }
+
+  .vote:hover {
+    color: black;
+    transform: scale(1.5);
+    @media screen and (max-width: 770px) {
+      transform: none;
+      color: gray;
+    }
+  }
+}

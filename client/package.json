@@ -1,0 +1,62 @@
+{
+  "name": "react-boiler-plate",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.15",
+    "@fortawesome/free-solid-svg-icons": "^5.7.2",
+    "@fortawesome/react-fontawesome": "^0.1.4",
+    "axios": "^0.18.0",
+    "bootstrap": "^4.3.1",
+    "i": "^0.3.6",
+    "node-sass": "^4.11.0",
+    "npm": "^6.8.0",
+    "prop-types": "^15.7.2",
+    "react": "^16.8.3",
+    "react-dom": "^16.8.3",
+    "react-images-upload": "^1.2.6",
+    "react-loader-spinner": "^2.3.0",
+    "react-mde": "^7.0.3",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "2.1.5",
+    "react-showdown": "^1.6.0",
+    "reactstrap": "^7.1.0",
+    "showdown": "^1.9.0",
+    "uuid": "^3.3.2"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint": "eslint ./src/ --cache",
+    "pretty": "prettier --write --tab-width 2 \"src/**/*.js\"",
+    "precommit": "npm run lint"
+  },
+  "lint-staged": {
+    "*.js": [
+      "npm run pretty",
+      "git add"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "react-app"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.10.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.11.0",
+    "husky": "^1.3.1",
+    "lint-staged": "^8.1.5",
+    "prettier": "^1.16.4"
+  }
+}

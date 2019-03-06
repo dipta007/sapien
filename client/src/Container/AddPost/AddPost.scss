@@ -1,0 +1,15 @@
+.post-form {
+  padding: 100px;
+  @media screen and (max-width: 770px) {
+    padding: 10px;
+  }
+  .breadcrumb {
+    padding: 20px 0 20px 10px;
+    font-size: 36px;
+    color: gray;
+  }
+}
+
+.margin-v-10 {
+  margin-top: 10px;
+}

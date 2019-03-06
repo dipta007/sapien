@@ -1,0 +1,22 @@
+.feed-navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px;
+  .sort-dropbox {
+    width: 200px;
+  }
+  .dropbox-label {
+    padding: 6px;
+    font-weight: 600;
+  }
+  .add-post {
+    cursor: pointer;
+  }
+  .add-post:hover {
+    color: #85c1e9;
+  }
+  .sort-box {
+    display: flex;
+  }
+}

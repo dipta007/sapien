@@ -1,0 +1,14 @@
+.post-navbar {
+  padding: 16px;
+  border-bottom: 4px solid black;
+  .home {
+    cursor: pointer;
+    .home-icon {
+    }
+    .title {
+      font-size: 18px;
+      margin-left: 10px;
+      font-weight: 500;
+    }
+  }
+}

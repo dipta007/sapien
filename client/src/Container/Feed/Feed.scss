@@ -1,0 +1,14 @@
+.feed {
+  .feed-space {
+    padding: 0 100px 0 100px;
+    // display: flex;
+    // justify-content: center;
+    @media screen and (max-width: 770px) {
+      padding: 0 10px 0 10px;
+    }
+    .loader {
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

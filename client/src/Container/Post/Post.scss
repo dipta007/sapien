@@ -1,0 +1,38 @@
+.post {
+  padding: 100px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  @media screen and (max-width: 770px) {
+    padding: 10px;
+  }
+
+  .author {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px;
+    img {
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+    }
+    .username {
+      margin-left: 10px;
+      font-weight: 500;
+      color: blue;
+    }
+  }
+
+  .media-cover {
+    display: flex;
+    justify-content: center;
+    background: #f3f1f1;
+    max-height: 400px;
+  }
+
+  .description {
+    margin-top: 40px;
+  }
+}
