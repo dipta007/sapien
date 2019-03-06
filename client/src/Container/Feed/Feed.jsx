@@ -9,7 +9,7 @@ class Feed extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      posts: dummy,
+      posts: [],
       sortOrder: 'Most Voted',
       loading: true
     };
