@@ -5,7 +5,7 @@ module.exports = {
     client: 'pg',
     version: '7.2',
     connection: {
-      host: 'sapien.coizuvfbjtc2.us-east-1.rds.amazonaws.com',
+      host: 'sapien.crffscfa8eeu.us-east-2.rds.amazonaws.com',
       user: 'dipta007',
       password: 'dipta007',
       database: 'sapien_test',

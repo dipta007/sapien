@@ -12,7 +12,7 @@ app.get('/', (req, res) => {
   res.status(200).send('okk');
 });
 
-const server = app.listen(8080, () => {
+const server = app.listen(7474, () => {
   const host = server.address().address;
   const { port } = server.address();
   console.log('Listening on ', host, port);
