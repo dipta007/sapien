@@ -1,5 +1,5 @@
 const AWS = require('./awsFileUpload');
-const { addMedia } = require('../CreateMedia/addMedia');
+const Axios = require('../Axios');
 
 const fileUp = async (req, res) => {
   const files = req.files.file;
@@ -13,7 +13,17 @@ const fileUp = async (req, res) => {
 
   Promise.all(promises)
     .then(async values => {
-      const id = await addMedia(values[0], values[1]);
+      let id = await Axios.post('/graphql', {
+        query: `
+          mutation addMedia {
+            addMedia(thumbUrl: "${values[0]}", 
+            coverUrl: "${values[1] ? values[1] : ''}") 
+          }
+        `
+      });
+
+      id = id.data.data.addMedia;
+
       if (id) res.status(200).send(id);
       else res.status(500).send('not uploaded');
     })

@@ -1,6 +1,7 @@
 const database = require('../knex');
 const { ApolloServer, gql } = require('apollo-server-express');
 const Axios = require('../Axios');
+const uuidv4 = require('uuid/v4');
 
 const typeDefs = gql`
   type Post {
@@ -34,6 +35,17 @@ const typeDefs = gql`
   type Mutation {
     upvote(id: String): Post!
     downvote(id: String): Post!
+    addPost(
+      postid: String
+      title: String
+      description: String
+      author: String
+      createdat: Float
+      upvotes: Int
+      downvotes: Int
+      mediaid: String
+    ): Post!
+    addMedia(thumbUrl: String, coverUrl: String): String!
   }
 `;
 
@@ -107,6 +119,48 @@ const resolvers = {
         `
       });
       return ret.data.data.posts[0];
+    },
+    addPost: async (
+      _,
+      {
+        postid,
+        title,
+        description,
+        author,
+        createdat,
+        upvotes,
+        downvotes,
+        mediaid
+      }
+    ) => {
+      const sql = `INSERT INTO posts (postid, title, description, userid, createdat, upvotes, downvotes, mediaid) values
+                ('${postid}', '${title}', '${description}', '${author}', '${createdat}',${upvotes}, ${downvotes}, '${mediaid}')`;
+      await database.raw(sql);
+      const ret = await Axios.post('/graphql', {
+        query: `
+          query {
+            posts(id: "${postid}") {
+              postid
+            }
+          }
+        `
+      });
+
+      return ret.data.data.posts[0];
+    },
+    addMedia: async (_, { thumbUrl, coverUrl }) => {
+      const id = uuidv4();
+      let sql = `INSERT into media (mediaid, mediathumbnail) values ('${id}', '${thumbUrl}')`;
+      if (coverUrl) {
+        sql = `INSERT into media (mediaid, mediacover, mediathumbnail) values ('${id}', '${coverUrl}', '${thumbUrl}')`;
+      }
+      try {
+        await database.raw(sql);
+        return id;
+      } catch (err) {
+        console.log(err);
+        return null;
+      }
     }
   }
 };
