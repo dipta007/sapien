@@ -19,15 +19,39 @@ class Post extends Component {
   }
 
   componentDidMount = async () => {
-    const { postid } = this.props.match.params;
+    let { postid } = this.props.match.params;
+    if (!postid) postid = '1';
+    console.log('asda', postid);
     this.setState({ loading: true });
     if (this.state.postid !== postid) {
-      const now = await Axios.get('/post/' + postid);
-      console.log(now.data[0]);
-      if (now.data.length > 0) {
+      const gql = await Axios.post('/graphql', {
+        query: `
+          query {
+            posts(id: "${postid}") {
+              totalCount
+              postid
+              title
+              description
+              createdat
+              author {
+                userid
+                username
+                userthumbnail
+              }
+              media {
+                mediaid
+                mediacover
+                mediathumbnail
+              }
+            }
+          }
+        `
+      });
+      const posts = gql.data.data.posts;
+      if (posts.length > 0) {
         this.setState({
           postId: postid,
-          post: now.data[0],
+          post: posts[0],
           loading: false
         });
       }
@@ -60,16 +84,11 @@ class Post extends Component {
     return (
       <div className="author">
         <div>
-          <img src={post.author.thumbnail} alt="author" />
+          <img src={post.author.userthumbnail} alt="author" />
           <span className="username">{post.author.username}</span>
         </div>
         <div>
-          <Votebox
-            upvotes={post.upvotes}
-            downvotes={post.downvotes}
-            align="row"
-            postId={post.id}
-          />
+          <Votebox align="row" postId={post.postid} />
         </div>
       </div>
     );
@@ -78,7 +97,13 @@ class Post extends Component {
   getMediaCover = post => {
     return (
       <div className="media-cover">
-        <img src={post.media.cover ? post.media.cover : post.media.thumbnail} />
+        <img
+          src={
+            post.media.mediacover
+              ? post.media.mediacover
+              : post.media.mediathumbnail
+          }
+        />
       </div>
     );
   };
