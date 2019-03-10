@@ -1,5 +1,6 @@
 const database = require('../knex');
 const { ApolloServer, gql } = require('apollo-server-express');
+const Axios = require('../Axios');
 
 const typeDefs = gql`
   type Post {
@@ -29,6 +30,11 @@ const typeDefs = gql`
   type Query {
     posts(id: String, orderBy: String, first: Int, offset: Int): [Post!]
   }
+
+  type Mutation {
+    upvote(id: String): Post!
+    downvote(id: String): Post!
+  }
 `;
 
 const resolvers = {
@@ -36,7 +42,6 @@ const resolvers = {
     posts: async (_, {
       id, orderBy, first, offset
     }) => {
-      console.log('ASdad');
       let sql = 'select * from posts';
       if (id) sql += ` where postid = '${id}'`;
       if (orderBy) {
@@ -49,7 +54,6 @@ const resolvers = {
       if (offset) {
         sql += ` offset ${offset}`;
       }
-      console.log(sql);
       const posts = await database.raw(sql);
       return posts.rows;
     }
@@ -72,12 +76,45 @@ const resolvers = {
       );
       return media.rows[0];
     }
+  },
+  Mutation: {
+    upvote: async (_, { id }) => {
+      await Axios.post(`/uvote/${id}`);
+      const ret = await Axios.post('/graphql', {
+        query: `
+          query {
+            posts(id: "${id}") {
+              postid
+              upvotes
+              downvotes
+            }
+          }
+        `
+      });
+      return ret.data.data.posts[0];
+    },
+    downvote: async (_, { id }) => {
+      await Axios.post(`/dvote/${id}`);
+      const ret = await Axios.post('/graphql', {
+        query: `
+          query {
+            posts(id: "${id}") {
+              postid
+              upvotes
+              downvotes
+            }
+          }
+        `
+      });
+      return ret.data.data.posts[0];
+    }
   }
 };
 
 const server = new ApolloServer({
   typeDefs,
   resolvers
+  // mocks: true
 });
 
 module.exports = server;
