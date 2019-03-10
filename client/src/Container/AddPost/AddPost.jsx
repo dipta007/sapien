@@ -70,15 +70,17 @@ class AddPost extends Component {
 
       // TODO: get the right author
       const postId = uuidv4();
-      await Axios.post('/addPost', {
-        postId: postId,
-        title: this.state.title,
-        description: this.state.description,
-        author: '1',
-        createdAt: Date.now(),
-        upvotes: 0,
-        downvotes: 0,
-        mediaId: mediaId
+
+      const res = await Axios.post('/graphql', {
+        query: `
+          mutation addPost {
+            addPost(postid: "${postId}", title: "${this.state.title}", 
+            description: "${this.state.description}", author: "1", 
+            createdat: ${Date.now()}, upvotes: 0, downvotes: 0, mediaid: "${mediaId}") {
+              postid
+            }
+          } 
+        `
       });
 
       this.props.history.push('/posts');
