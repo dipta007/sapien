@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import './FeedItem.scss';
 import Votebox from '../Votebox/Votebox';
+import './FeedItem.scss';
 
 class FeedItem extends Component {
   goToPost = id => {
@@ -54,7 +54,7 @@ FeedItem.propTypes = {
     createdat: PropTypes.number.isRequired,
     media: PropTypes.shape({
       cover: PropTypes.string,
-      thumbnail: PropTypes.string.isRequired
+      mediathumbnail: PropTypes.string.isRequired
     })
   }).isRequired
 };

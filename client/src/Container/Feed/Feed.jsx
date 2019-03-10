@@ -110,6 +110,8 @@ class Feed extends Component {
       `
     });
 
+    console.log(graph);
+
     this.setState({
       posts: graph.data.data.posts,
       loading: false,

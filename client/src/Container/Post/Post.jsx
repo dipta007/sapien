@@ -20,8 +20,8 @@ class Post extends Component {
 
   componentDidMount = async () => {
     let { postid } = this.props.match.params;
+    // storybook to work
     if (!postid) postid = '1';
-    console.log('asda', postid);
     this.setState({ loading: true });
     if (this.state.postid !== postid) {
       const gql = await Axios.post('/graphql', {
