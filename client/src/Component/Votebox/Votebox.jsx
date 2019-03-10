@@ -36,21 +36,39 @@ class Votebox extends Component {
 
   thumbsUp = async e => {
     e.stopPropagation();
-    await Axios.post('/uvote/' + this.props.postId);
-    this.setState(prevState => {
-      return {
-        upvotes: prevState.upvotes + 1
-      };
+    const res = await Axios.post('/graphql', {
+      query: `
+        mutation upvote {
+          upvote(id: "${this.props.postId}") {
+            postid
+            upvotes
+            downvotes
+          }
+        }
+      `
+    });
+    const now = res.data.data.upvote;
+    this.setState({
+      upvotes: now.upvotes
     });
   };
 
   thumbsDown = async e => {
     e.stopPropagation();
-    await Axios.post('/dvote/' + this.props.postId);
-    this.setState(prevState => {
-      return {
-        downvotes: prevState.downvotes + 1
-      };
+    const res = await Axios.post('/graphql', {
+      query: `
+        mutation downvote {
+          downvote(id: "${this.props.postId}") {
+            postid
+            upvotes
+            downvotes
+          }
+        }
+      `
+    });
+    const now = res.data.data.downvote;
+    this.setState({
+      downvotes: now.downvotes
     });
   };
   render() {
