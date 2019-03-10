@@ -22,7 +22,9 @@ const server = app.listen(7474, () => {
 const post = require('./Posts/index');
 const createPost = require('./CreatePost/index');
 const fileUpload = require('./FileUplaod/index');
+const graphQL = require('./GraphQL/index');
 
 app.use(post);
 app.use(createPost);
 app.use(fileUpload);
+app.use(graphQL);
