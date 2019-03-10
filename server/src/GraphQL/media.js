@@ -10,6 +10,10 @@ const typeDefs = gql`
   }
   extend type Mutation {
     addMedia(thumbUrl: String, coverUrl: String): String!
+    deleteMedia(id: String): String!
+  }
+  extend type Query {
+    medias(id: String): [Media!]
   }
 `;
 
@@ -28,6 +32,22 @@ const resolver = {
         console.log(err);
         return null;
       }
+    },
+    deleteMedia: async (_, { id }) => {
+      const sql = `delete from media where mediaid = '${id}'`;
+      await knex.raw(sql);
+      return id;
+    }
+  },
+  Query: {
+    medias: async (_, { id }) => {
+      let data;
+      if (id) {
+        data = await knex('media')
+          .select()
+          .where('mediaid', id);
+      } else data = await knex('media').select();
+      return data;
     }
   }
 };

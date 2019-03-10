@@ -12,6 +12,12 @@
     "comma-dangle": "off",
     "indent": ["error", 2],
     "import/order": 0,
-    "arrow-parens": 0
+    "arrow-parens": 0,
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true
+      }
+    ]
   }
 }

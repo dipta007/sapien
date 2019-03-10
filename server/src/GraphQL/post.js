@@ -28,6 +28,8 @@ const typeDefs = gql`
       downvotes: Int
       mediaid: String
     ): Post!
+
+    deletePost(postid: String): String!
   }
 `;
 
@@ -99,6 +101,12 @@ const resolver = {
       });
 
       return ret.data.data.posts[0];
+    },
+
+    deletePost: async (_, { postid }) => {
+      const sql = `delete from posts where postid = '${postid}'`;
+      await knex.raw(sql);
+      return postid;
     }
   }
 };

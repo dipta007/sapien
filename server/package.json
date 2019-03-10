@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha src/**/tests/*.js",
+    "test": "mocha src/**/tests/*.js --timeout 30000",
     "install:prod": "NODE_ENV=production npm install",
     "start": "node src/index.js",
     "lint": "eslint ./src/ --cache",
