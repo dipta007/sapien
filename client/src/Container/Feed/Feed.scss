@@ -1,10 +1,10 @@
 .feed {
   .feed-space {
-    padding: 0 100px 0 100px;
+    padding: 0 100px 40px 100px;
     // display: flex;
     // justify-content: center;
     @media screen and (max-width: 770px) {
-      padding: 0 10px 0 10px;
+      padding: 0 10px 40px 10px;
     }
     .loader {
       display: flex;
@@ -29,14 +29,10 @@
     display: inline-block;
     cursor: pointer;
     color: white;
-    // height: 100px;
-    // width: 100px;
-    // border: 1px solid black;
   }
 
   .active {
     color: blue;
-    // background-color: blue;
     border: 1px solid blue;
     border-radius: 50%;
   }
@@ -44,8 +40,4 @@
   .disabled {
     cursor: default;
   }
-}
-
-#react-paginate {
-  display: inline-block;
 }
