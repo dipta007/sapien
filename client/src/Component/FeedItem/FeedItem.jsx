@@ -6,29 +6,24 @@ import Votebox from '../Votebox/Votebox';
 
 class FeedItem extends Component {
   goToPost = id => {
-    this.props.history.push('posts/' + this.props.payload.id);
+    this.props.history.push('posts/' + this.props.payload.postid);
   };
   render() {
     const { payload } = this.props;
     const { author } = payload;
     const { media } = payload;
     return (
-      <div className="feed-item" onClick={() => this.goToPost(payload.id)}>
-        <Votebox
-          upvotes={payload.upvotes}
-          downvotes={payload.downvotes}
-          align="col"
-          postId={payload.id}
-        />
+      <div className="feed-item" onClick={() => this.goToPost(payload.postid)}>
+        <Votebox align="col" postId={payload.postid} />
         <img
           className="media-thumb"
-          src={media.thumbnail}
+          src={media.mediathumbnail}
           alt="thumbanail of the user"
         />
         <div className="info-box">
           <div className="title">{payload.title}</div>
           <div className="author-box">
-            <img src={author.thumbnail} alt="userImage" />
+            <img src={author.userthumbnail} alt="userImage" />
             <div className="author-name">{author.username}</div>
           </div>
           <div className="time">
@@ -49,16 +44,14 @@ class FeedItem extends Component {
 
 FeedItem.propTypes = {
   payload: PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    postid: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     description: PropTypes.string.isRequired,
     author: PropTypes.shape({
-      thumbnail: PropTypes.string.isRequired,
+      userthumbnail: PropTypes.string.isRequired,
       username: PropTypes.string.isRequired
     }),
     createdat: PropTypes.number.isRequired,
-    upvotes: PropTypes.number.isRequired,
-    downvotes: PropTypes.number.isRequired,
     media: PropTypes.shape({
       cover: PropTypes.string,
       thumbnail: PropTypes.string.isRequired
