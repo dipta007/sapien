@@ -136,23 +136,21 @@ class Feed extends Component {
     return (
       <div className="feed">
         <FeedNavBar sortOrder={sortOrder} onChange={this.sortChanged} />
-        {this.state.loading ? null : (
-          <div id="react-paginate">
-            <ReactPaginate
-              previousLabel={'<'}
-              nextLabel={'>'}
-              breakLabel={'...'}
-              breakClassName={'break-me'}
-              pageCount={Math.ceil(total / PAGE_LIMIT)}
-              marginPagesDisplayed={2}
-              pageRangeDisplayed={5}
-              onPageChange={this.handlePageClick}
-              containerClassName={'pagination'}
-              subContainerClassName={'pages pagination'}
-              activeClassName={'active'}
-            />
-          </div>
-        )}
+        <div id="react-paginate">
+          <ReactPaginate
+            previousLabel={'<'}
+            nextLabel={'>'}
+            breakLabel={'...'}
+            breakClassName={'break-me'}
+            pageCount={Math.ceil(total / PAGE_LIMIT)}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={this.handlePageClick}
+            containerClassName={'pagination'}
+            subContainerClassName={'pages pagination'}
+            activeClassName={'active'}
+          />
+        </div>
         <div className="feed-space">{loading ? <Loading /> : feed}</div>
       </div>
     );
