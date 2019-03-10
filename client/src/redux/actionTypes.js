@@ -1,0 +1,2 @@
+const CHANGE_USERNAME = 'CHANGE_USERNAME';
+export default CHANGE_USERNAME;

@@ -6,6 +6,7 @@ import Editor from '../../Component/Editor/Editor';
 import ImageUpload from '../../Component/ImageUpload/ImageUpload';
 import Axios from './../../Utilities/axios';
 import { withRouter } from 'react-router-dom';
+import { connect } from 'react-redux';
 const uuidv4 = require('uuid/v4');
 
 class AddPost extends Component {
@@ -68,14 +69,28 @@ class AddPost extends Component {
       const payload = await Axios.post('/addMedia', data);
       const mediaId = payload.data;
 
-      // TODO: get the right author
+      let author = await Axios.post('/graphql', {
+        query: `
+          query {
+            authors(username: "${this.props.username}") {
+              username
+              userid
+            }
+          }
+        `
+      });
+
+      author = author.data.data.authors[0].userid;
+
+      console.log(author);
+
       const postId = uuidv4();
 
       const res = await Axios.post('/graphql', {
         query: `
           mutation addPost {
             addPost(postid: "${postId}", title: "${this.state.title}", 
-            description: "${this.state.description}", author: "1", 
+            description: "${this.state.description}", author: "${author}", 
             createdat: ${Date.now()}, upvotes: 0, downvotes: 0, mediaid: "${mediaId}") {
               postid
             }
@@ -123,7 +138,7 @@ class AddPost extends Component {
           onChange={this.thumbnailChange}
           required={true}
           alertMessage="Thumbnail must be added"
-          submitted={thumbError}
+          submitted={!!thumbError}
           label="Thumbnail"
         />
 
@@ -141,6 +156,13 @@ class AddPost extends Component {
   }
 }
 
-AddPost.propTypes = {};
+const mapStateToProps = state => {
+  return {
+    username: state.username
+  };
+};
 
-export default withRouter(AddPost);
+export default connect(
+  mapStateToProps,
+  null
+)(withRouter(AddPost));

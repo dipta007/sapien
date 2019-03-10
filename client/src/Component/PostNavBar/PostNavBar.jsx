@@ -18,8 +18,6 @@ class PostNavBar extends Component {
             className="home-icon"
             size="3x"
           />
-          {/* // TODO: Add home with correct alignment */}
-          {/* <span className="title">Home</span> */}
         </span>
       </div>
     );

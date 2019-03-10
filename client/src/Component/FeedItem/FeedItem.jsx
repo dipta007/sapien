@@ -5,9 +5,10 @@ import Votebox from '../Votebox/Votebox';
 import './FeedItem.scss';
 
 class FeedItem extends Component {
-  goToPost = id => {
-    this.props.history.push('posts/' + this.props.payload.postid);
+  goToPost = (id) => {
+    this.props.history.push(`posts/${this.props.payload.postid}`);
   };
+
   render() {
     const { payload } = this.props;
     const { author } = payload;

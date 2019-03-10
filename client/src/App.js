@@ -1,7 +1,5 @@
 import React, { Component, Suspense } from 'react';
-import {
- BrowserRouter, Switch, Route, Redirect
-} from 'react-router-dom';
+import { BrowserRouter, Switch, Route, Redirect } from 'react-router-dom';
 import './App.css';
 import HomeNavBar from './Component/NavBar/HomeNavbar';
 import Feed from './Container/Feed/Feed';

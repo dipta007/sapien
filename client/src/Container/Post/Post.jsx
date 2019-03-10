@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
-import Axios from '../../Utilities/axios.js';
-import PostNavBar from '../../Component/PostNavBar/PostNavBar.jsx';
-import Loading from '../../Component/Loading/Loading';
-import Votebox from '../../Component/Votebox/Votebox.jsx';
 import { Markdown } from 'react-showdown';
+import Axios from '../../Utilities/axios';
+import PostNavBar from '../../Component/PostNavBar/PostNavBar';
+import Loading from '../../Component/Loading/Loading';
+import Votebox from '../../Component/Votebox/Votebox';
 import './Post.scss';
 
 class Post extends Component {
@@ -47,7 +46,7 @@ class Post extends Component {
           }
         `
       });
-      const posts = gql.data.data.posts;
+      const { posts } = gql.data.data;
       if (posts.length > 0) {
         this.setState({
           postId: postid,
@@ -58,18 +57,9 @@ class Post extends Component {
     }
   };
 
-  render() {
-    const { post } = this.state;
-    return (
-      <>
-        <PostNavBar />
-        <div className="post">{this.getPostDetails(post)}</div>
-      </>
-    );
-  }
-
-  getPostDetails = post => {
-    if (this.state.loading) return <Loading />;
+  getPostDetails = (post) => {
+    const { loading } = this.state;
+    if (loading) return <Loading />;
     return (
       <>
         <h1>{post.title}</h1>
@@ -80,43 +70,46 @@ class Post extends Component {
     );
   };
 
-  getAuthor = post => {
-    return (
-      <div className="author">
-        <div>
-          <img src={post.author.userthumbnail} alt="author" />
-          <span className="username">{post.author.username}</span>
-        </div>
-        <div>
-          <Votebox align="row" postId={post.postid} />
-        </div>
+  getAuthor = post => (
+    <div className="author">
+      <div>
+        <img src={post.author.userthumbnail} alt="author" />
+        <span className="username">{post.author.username}</span>
       </div>
-    );
-  };
+      <div>
+        <Votebox align="row" postId={post.postid} />
+      </div>
+    </div>
+  );
 
-  getMediaCover = post => {
-    return (
-      <div className="media-cover">
-        <img
-          src={
-            post.media.mediacover
-              ? post.media.mediacover
-              : post.media.mediathumbnail
-          }
-        />
-      </div>
-    );
-  };
+  getMediaCover = post => (
+    <div className="media-cover">
+      <img
+        src={
+          post.media.mediacover
+            ? post.media.mediacover
+            : post.media.mediathumbnail
+        }
+        alt="media cover"
+      />
+    </div>
+  );
 
-  getDescription = post => {
+  getDescription = post => (
+    <div className="description">
+      <Markdown markup={post.description} />
+    </div>
+  );
+
+  render() {
+    const { post } = this.state;
     return (
-      <div className="description">
-        <Markdown markup={post.description} />
-      </div>
+      <>
+        <PostNavBar />
+        <div className="post">{this.getPostDetails(post)}</div>
+      </>
     );
-  };
+  }
 }
-
-Post.propTypes = {};
 
 export default withRouter(Post);
