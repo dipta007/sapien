@@ -9,7 +9,8 @@
     "start": "node src/index.js",
     "lint": "eslint ./src/ --cache",
     "pretty": "prettier --write --tab-width 2 \"src/**/*.js\"",
-    "precommit": "npm run lint && npm test"
+    "precommit": "npm run lint && npm test",
+    "start:prod": "NODE_ENV=production pm2 start app.js"
   },
   "lint-staged": {
     "*.js": [
