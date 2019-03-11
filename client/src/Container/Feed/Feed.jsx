@@ -37,42 +37,6 @@ class Feed extends Component {
     );
   };
 
-  sideEffects = async () => {
-    const posts = await Axios.get('/posts/', {
-      params: {
-        sort: this.state.sortOrder
-      }
-    });
-
-    const graph = await Axios.post('/graphql', {
-      query: `
-        query {
-          posts(orderBy: "Most Voted") {
-            postid
-            title
-            description
-            createdat
-            author {
-              userid
-              username
-              userthumbnail
-            }
-            media {
-              mediaid
-              mediacover
-              mediathumbnail
-            }
-          }
-        }
-      `
-    });
-    console.log(graph.data.data.posts, posts.data);
-    this.setState({
-      posts: posts.data,
-      loading: false
-    });
-  };
-
   componentDidMount = async () => {
     try {
       this.getData(this.state.sortOrder, PAGE_LIMIT, 0);
@@ -84,7 +48,6 @@ class Feed extends Component {
   };
 
   getData = async (sortOrder, limit, offset) => {
-    console.log(sortOrder, limit, offset);
     this.setState({ loading: true });
     const graph = await Axios.post('/graphql', {
       query: `
@@ -109,8 +72,6 @@ class Feed extends Component {
         }
       `
     });
-
-    console.log(graph);
 
     this.setState({
       posts: graph.data.data.posts,
@@ -137,7 +98,11 @@ class Feed extends Component {
     ));
     return (
       <div className="feed">
-        <FeedNavBar sortOrder={sortOrder} onChange={this.sortChanged} />
+        <FeedNavBar
+          sortOrder={sortOrder}
+          onChange={this.sortChanged}
+          loading={loading}
+        />
         <div id="react-paginate">
           <ReactPaginate
             previousLabel={'<'}

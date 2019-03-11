@@ -1,9 +1,9 @@
 import React from 'react';
-
 import { storiesOf } from '@storybook/react';
-
 import StoryRouter from 'storybook-react-router';
+import { ApolloProvider } from 'react-apollo';
 import FeedItem from './FeedItem';
+import apolloClient from '../../Utilities/apolloClient';
 
 storiesOf('NewsFeed Post', module)
   .addDecorator(StoryRouter())
@@ -13,7 +13,7 @@ storiesOf('NewsFeed Post', module)
       title: 'test title',
       description: 'lorem ipsum',
       author: {
-        thumbnail:
+        userthumbnail:
           'https://avatars0.githubusercontent.com/u/13894030?s=400&v=4',
         username: 'dipta007'
       },
@@ -21,12 +21,16 @@ storiesOf('NewsFeed Post', module)
       upvotes: 10,
       downvotes: 20,
       media: {
-        cover:
+        mediacover:
           'https://cdn.pixabay.com/photo/2017/12/29/18/47/nature-3048299__340.jpg',
-        thumbnail:
+        mediathumbnail:
           'https://cdn.pixabay.com/photo/2017/12/29/18/47/nature-3048299__340.jpg'
       }
     };
 
-    return <FeedItem payload={payload} />;
+    return (
+      <ApolloProvider client={apolloClient}>
+        <FeedItem payload={payload} />
+      </ApolloProvider>
+    );
   });

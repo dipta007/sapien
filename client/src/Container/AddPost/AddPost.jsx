@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import { Button, FormGroup, Label, Input, Alert } from 'reactstrap';
 import './AddPost.scss';
 import Editor from '../../Component/Editor/Editor';
@@ -82,11 +81,8 @@ class AddPost extends Component {
 
       author = author.data.data.authors[0].userid;
 
-      console.log(author);
-
       const postId = uuidv4();
-
-      const res = await Axios.post('/graphql', {
+      await Axios.post('/graphql', {
         query: `
           mutation addPost {
             addPost(postid: "${postId}", title: "${this.state.title}", 
@@ -125,7 +121,7 @@ class AddPost extends Component {
 
         <Editor
           onChange={this.descriptionChange}
-          submitted={descriptionError}
+          submitted={!!descriptionError}
         />
 
         <ImageUpload

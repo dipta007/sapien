@@ -96,7 +96,7 @@ class Votebox extends Component {
           variables={{ id: postId }}
         >
           {({ data }) => {
-            if (data && data.upvote.upvotes != upvotes) {
+            if (data && data.upvote.upvotes !== upvotes) {
               this.setState({
                 upvotes: data.upvote.upvotes
               });
@@ -110,7 +110,7 @@ class Votebox extends Component {
           variables={{ id: postId }}
         >
           {({ data }) => {
-            if (data && data.downvote.downvotes != downvotes) {
+            if (data && data.downvote.downvotes !== downvotes) {
               this.setState({
                 downvotes: data.downvote.downvotes
               });

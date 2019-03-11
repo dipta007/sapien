@@ -56,6 +56,9 @@ class Editor extends Component {
   }
 }
 
-Editor.propTypes = {};
+Editor.propTypes = {
+  submitted: PropTypes.bool,
+  onChange: PropTypes.func
+};
 
 export default Editor;

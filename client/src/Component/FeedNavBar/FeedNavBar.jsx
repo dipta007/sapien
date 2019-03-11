@@ -11,7 +11,7 @@ class FeedNavBar extends Component {
     this.props.history.push('/addPost');
   };
   render() {
-    const { sortOrder, onChange } = this.props;
+    const { sortOrder, onChange, loading } = this.props;
     return (
       <div className="feed-navbar">
         <FontAwesomeIcon
@@ -27,6 +27,7 @@ class FeedNavBar extends Component {
             className="sort-dropbox"
             value={sortOrder}
             onChange={onChange}
+            disabled={loading}
           >
             <option>Most Voted</option>
             <option>Created by</option>
