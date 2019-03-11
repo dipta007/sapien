@@ -5,6 +5,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './Votebox.scss';
 import Axios from '../../Utilities/axios';
 
+import gql from 'graphql-tag';
+import { Subscription } from 'react-apollo';
+
 class Votebox extends Component {
   constructor(props) {
     super(props);
@@ -72,7 +75,7 @@ class Votebox extends Component {
     });
   };
   render() {
-    const { align } = this.props;
+    const { align, postId } = this.props;
     const { upvotes, downvotes } = this.state;
     return (
       <div className={`vote-box-${align}`}>
@@ -87,6 +90,34 @@ class Votebox extends Component {
           className="vote"
           onClick={this.thumbsDown}
         />
+
+        <Subscription
+          subscription={UPVOTE_SUBSCRIPTION}
+          variables={{ id: postId }}
+        >
+          {({ data }) => {
+            if (data && data.upvote.upvotes != upvotes) {
+              this.setState({
+                upvotes: data.upvote.upvotes
+              });
+            }
+            return null;
+          }}
+        </Subscription>
+
+        <Subscription
+          subscription={DOWNVOTE_SUBSCRIPTION}
+          variables={{ id: postId }}
+        >
+          {({ data }) => {
+            if (data && data.downvote.downvotes != downvotes) {
+              this.setState({
+                downvotes: data.downvote.downvotes
+              });
+            }
+            return null;
+          }}
+        </Subscription>
       </div>
     );
   }
@@ -98,3 +129,23 @@ Votebox.propTypes = {
 };
 
 export default Votebox;
+
+const UPVOTE_SUBSCRIPTION = gql`
+  subscription upvote($id: String!) {
+    upvote(postId: $id) {
+      postid
+      upvotes
+      downvotes
+    }
+  }
+`;
+
+const DOWNVOTE_SUBSCRIPTION = gql`
+  subscription downvote($id: String!) {
+    downvote(postId: $id) {
+      postid
+      upvotes
+      downvotes
+    }
+  }
+`;
